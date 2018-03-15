@@ -1,5 +1,5 @@
 module Controller(
-
+hi
 reg clock = 1'b0;
 reg enable;
 reg data;
