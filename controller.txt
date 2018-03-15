@@ -1,0 +1,73 @@
+module Controller(
+
+reg clock = 1'b0;
+reg enable;
+reg data;
+wire done;
+wire [15:0] out;
+wire scaled_clock;
+wire lrsel;
+reg [15:0]D;
+wire done;
+wire out;
+wire sdaudio;
+wire scaled_clock;
+wire [4:0] count;
+wire [15:0] temp;
+);
+
+typedef enum logic [6:0] {IDLE = 7'b0000001, RECORD = 7'b0000010, REPLAY = 7'b0000100, CLIP = 7'b0001000, WRITE = 7'b0010000, READ = 7'b0100000, RESET = 7'b1000000} states;
+    states state;
+    states next_state;
+
+
+
+ always_ff @(posedge clock)
+    begin
+        if (reset)
+            state <= `TCQ RESET;
+        else
+            state <= `TCQ next_state;
+    end
+    
+    always_comb
+    begin
+        case(state)
+		RESET: begin
+            
+            next_state = IDLE;
+        end
+        IDLE: begin
+            (something like if 1 then
+            next_state = RECORD;)
+			else(next_state = REPLAY;)
+        end
+        RECORD: begin
+            
+           
+            next_state = CLIP;
+        end
+        REPLAY: begin     
+            
+           
+             
+            next_state = CLIP;
+        end
+         CLIP: begin
+		 (set address for clip 1 or 2)
+				(if 1 next_state = WRITE;)
+				else next_state = READ;
+            
+        end
+        WRITE: begin
+            (address+1)
+            next_state = IDLE;
+        end
+		 READ: begin
+            
+            next_state = IDLE;
+        end
+        default: next_state = state;
+        endcase
+    end
+endmodule
